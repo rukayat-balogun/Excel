@@ -57,3 +57,82 @@ WHERE FirstName LIKE '%p';
 
 SELECT FirstName, MiddleName, LastName FROM Person.Person
 WHERE FirstName LIKE 'P__%';
+
+
+
+SELECT * FROM sys.tables;
+
+
+-- ORDER BY
+
+SELECT * FROM Sales.SalesOrderDetail;
+
+SELECT * FROM Sales.SalesOrderDetail AS SOD
+ORDER BY UnitPrice DESC;
+
+SELECT * FROM Sales.SalesPerson ORDER BY SalesQuota, SalesYTD DESC;
+
+SELECT * FROM HumanResources.Employee;
+
+SELECT JobTitle, SUM(SickLeaveHours) AS 'Count' FROM HumanResources.Employee
+GROUP BY JobTitle
+ORDER BY Count DESC;
+
+-- ORDER OF OPERATIONS
+-- FROM HumanResources.Employee
+-- GROUP BY JobTitle
+-- SELECT JobTitle, SUM(SickLeaveHours) AS 'Count'
+-- ORDER BY Count DESC;
+
+
+SELECT JobTitle, AVG(SickLeaveHours) AS 'Count' FROM HumanResources.Employee
+GROUP BY JobTitle
+ORDER BY Count DESC;
+
+
+SELECT JobTitle, MIN(SickLeaveHours) AS 'Count' FROM HumanResources.Employee
+GROUP BY JobTitle
+ORDER BY Count ASC;
+
+SELECT Max(SickLeaveHours) AS 'Sickleave' FROM HumanResources.Employee
+
+
+SELECT JobTitle, Count(*) AS 'Count' FROM HumanResources.Employee
+GROUP BY JobTitle
+ORDER BY Count DESC;
+
+SELECT JobTitle, Count(*) AS 'Count' FROM HumanResources.Employee
+GROUP BY JobTitle
+ORDER BY Count DESC;
+
+SELECT DISTINCT(COUNT(JobTitle)) FROM HumanResources.Employee;
+
+
+Stocker| Janitor | Buyer
+ -- IN
+SELECT * FROM HumanResources.Employee
+WHERE JobTitle ='Buyer'
+
+SELECT * FROM HumanResources.Employee
+WHERE JobTitle ='Janitor'
+
+SELECT * FROM HumanResources.Employee
+WHERE JobTitle ='Stocker'
+
+
+SELECT * FROM HumanResources.Employee
+WHERE JobTitle IN ('Stocker', 'Janitor' ,'Buyer')
+
+
+SELECT * FROM HumanResources.Employee
+WHERE VacationHours NOT BETWEEN 50 AND 75;
+
+
+SELECT * FROM HumanResources.Employee
+WHERE JobTitle IN ('Stocker', 'Janitor' ,'Buyer')
+OR VacationHours NOT BETWEEN 50 AND 75;
+
+-- TRUE & TRUE - TRUE
+-- FALSE & TRUE - FALSE
+-- TRUE & FALSE - FALSE
+-- FALSE & FALSE - FALSE
