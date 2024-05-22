@@ -136,3 +136,38 @@ OR VacationHours NOT BETWEEN 50 AND 75;
 -- FALSE & TRUE - FALSE
 -- TRUE & FALSE - FALSE
 -- FALSE & FALSE - FALSE
+
+
+--JOIN
+--INNER JOIN, OUTER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN
+
+SELECT * FROM [HumanResources].[Employee] AS HRE 
+
+SELECT * FROM [Person].[Person] PP
+
+SELECT * FROM [HumanResources].[Employee] AS HRE  
+INNER JOIN
+[Person].[Person] PP
+ON HRE.BusinessEntityID = PP.BusinessEntityID;
+
+SELECT * FROM [HumanResources].[Employee] AS HRE  
+LEFT JOIN
+[Person].[Person] PP
+ON HRE.BusinessEntityID = PP.BusinessEntityID;
+
+SELECT * FROM [Person].[Person] PP
+RIGHT JOIN
+[HumanResources].[Employee] AS HRE  
+ON HRE.BusinessEntityID = PP.BusinessEntityID;
+
+
+SELECT * FROM [Person].[Person] PP
+FULL JOIN
+[HumanResources].[Employee] AS HRE  
+ON HRE.BusinessEntityID = PP.BusinessEntityID;
+
+
+SELECT * FROM [Person].[Person] PP
+LEFT OUTER JOIN
+[HumanResources].[Employee] AS HRE  
+ON HRE.BusinessEntityID = PP.BusinessEntityID;
