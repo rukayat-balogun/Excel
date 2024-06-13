@@ -15,7 +15,7 @@ ALTER TABLE author
 ADD age int not null
 
 
-INSERT INTO author(name, email)
+INSERT INTO employees(name, email)
 VALUES ('Balogun Rukayat' , 'rb@gmail.com');
 
 
@@ -171,3 +171,124 @@ SELECT * FROM [Person].[Person] PP
 LEFT OUTER JOIN
 [HumanResources].[Employee] AS HRE  
 ON HRE.BusinessEntityID = PP.BusinessEntityID;
+
+--UNION & UNION ALL
+select * from author;
+
+
+CREATE TABLE employees(
+    id  int IDENTITY(1,1) not null PRIMARY key,
+    name varchar(30) not null,
+    email VARCHAR(15) not null
+);
+
+SELECT * FROM employees;
+
+INSERT INTO employees(id, name, email)
+VALUES(1, 'Simi', 'simi@gmail.com'),
+(2, 'Adekunle', 'ade@gmail')
+
+
+--UNION
+
+SELECT * FROM employees
+UNION ALL
+select * from author;
+
+
+
+CREATE TABLE student(
+    name VARCHAR(15),
+    age INT
+)
+
+CREATE TABLE staff(
+    name VARCHAR(15),
+    age INT
+)
+
+
+INSERT INTO staff( name, age)
+VALUES( 'STAFF A', 15),
+('STAFF B', 18)
+
+SELECT * FROM staff
+UNION ALL
+SELECT * FROM employees;
+
+
+SELECT * FROM SYS.TABLES;
+
+
+SELECT * from Production.ProductCategory;
+SELECT * from Production.ProductSubcategory;
+
+
+SELECT DISTINCT(PPC.Name), PPS.ProductCategoryID ,COUNT(PPS.ProductCategoryID) FROM Production.ProductSubcategory PPS 
+INNER JOIN Production.ProductCategory PPC 
+ON PPS.ProductCategoryID = PPC.ProductCategoryID
+GROUP BY PPS.ProductCategoryID , PPC.Name;
+
+
+
+
+
+SELECT * FROM sys.TABLEs;
+
+
+SELECT * FROM DimCustomer;
+
+
+SELECT * FROM FactInternetSales;
+
+SELECT * FROM DimSalesTerritory;
+
+CREATE TABLE TableRegion(
+    EnglishOccupation VARCHAR(30) not null,
+    Average DECIMAL not null,
+    SalesTerritoryCountry VARCHAR(30) not null
+)
+
+INSERT INTO TableRegion 
+SELECT DC.EnglishOccupation , AVG(FI.SalesAmount) AS 'Average', DS.SalesTerritoryCountry FROM DimCustomer DC
+INNER JOIN
+FactInternetSales FI
+ON DC.CustomerKey = FI.CustomerKey
+INNER JOIN
+DimSalesTerritory DS 
+ON DS.SalesTerritoryKey = FI.SalesTerritoryKey
+GROUP BY DC.EnglishOccupation , DS.SalesTerritoryCountry ;
+
+
+SELECT * FROM TableRegion
+WHERE SalesTerritoryCountry = 'United States';
+
+
+SELECT EnglishOccupation ,Average, SalesTerritoryCountry,
+CASE 
+WHEN Average <= 200 THEN 'low'
+WHEN Average between 201 and 700 THEN 'Medium'
+WHEN Average > 700 THEN 'High'
+END AS SalesCat
+FROM TableRegion
+
+
+--STORED PROCEDURE
+
+CREATE PROCEDURE category
+AS
+SELECT DISTINCT(PPC.Name), PPS.ProductCategoryID ,COUNT(PPS.ProductCategoryID) FROM Production.ProductSubcategory PPS 
+INNER JOIN Production.ProductCategory PPC 
+ON PPS.ProductCategoryID = PPC.ProductCategoryID
+GROUP BY PPS.ProductCategoryID , PPC.Name;
+
+
+EXEC category;
+
+CREATE PROCEDURE HumanR @gender varchar(20)
+
+AS
+SELECT * FROM HumanResources.Employee WHERE Gender = @gender 
+;
+
+EXEC HumanR  @gender= 'M'
